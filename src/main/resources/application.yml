@@ -1,0 +1,25 @@
+spring:
+  profiles.active: development
+---
+
+spring:
+    profiles: development
+server:
+    address: 127.0.0.1
+    port: 8080
+
+spring.data.mongodb:
+    host: 127.0.0.1
+    port: 27017
+    database: dinner-recipes
+
+---
+spring:
+    profiles: production
+server:
+    port: 8080
+
+spring.data.mongodb:
+    host: mongodb_service
+    port: 27017
+    database: dinner-recipes

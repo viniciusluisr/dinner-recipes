@@ -1,0 +1,25 @@
+#eclipse config
+.classpath
+.settings
+.externalToolBuilders
+.project
+
+# IntelliJ Config #
+.idea
+*.iml
+
+# Compiling
+target/
+bin/
+out/
+*.class
+
+#mac temp
+*.DS_Store
+
+# Package Files #
+*.war
+*.jar
+
+# Elasticsearch Files #
+/data*

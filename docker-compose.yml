@@ -1,0 +1,25 @@
+version: '3'
+
+networks:
+  dinner-recipes-app-tier:
+    driver: bridge
+
+services:
+
+  mongodb:
+    image: 'bitnami/mongodb:latest'
+    container_name: mongodb_service
+    ports:
+      - "27017:27017/tcp"
+    networks:
+      - dinner-recipes-app-tier
+
+  dinner-recipes:
+    image: 'springio/dinner-recipes'
+    container_name: dinner-recipes
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+    networks:
+      - dinner-recipes-app-tier

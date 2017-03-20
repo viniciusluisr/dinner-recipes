@@ -17,7 +17,12 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment =  SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -25,7 +30,9 @@ public class IngredientControllerTest extends TestFixtureSupport {
 
     @Override
     public void setUp() {
-
+        HttpServletRequest httpServletRequestMock = new MockHttpServletRequest();
+        ServletRequestAttributes servletRequestAttributes = new ServletRequestAttributes(httpServletRequestMock);
+        RequestContextHolder.setRequestAttributes(servletRequestAttributes);
     }
 
     @Test
@@ -49,7 +56,7 @@ public class IngredientControllerTest extends TestFixtureSupport {
         final ItemResource body = TestItemApiEndpoints.find(dinnerRecipeBody.getDinnerRecipeId(), itemRequest.getItemId()).getBody();
 
         assertEquals(body.getIngredients().size(), itemRequest.getIngredients().size() + 1);
-        assertTrue(body.getIngredients().contains(ingredientRequest));
+        assertTrue(body.getIngredients().stream().anyMatch(i -> i.getName().equals(ingredientRequest.getName())));
 
         TestDinnerRecipeApiEndpoints.deleteAll();
     }

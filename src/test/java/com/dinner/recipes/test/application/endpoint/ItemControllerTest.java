@@ -17,7 +17,12 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment =  SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -25,7 +30,9 @@ public class ItemControllerTest extends TestFixtureSupport {
 
     @Override
     public void setUp() {
-
+        HttpServletRequest httpServletRequestMock = new MockHttpServletRequest();
+        ServletRequestAttributes servletRequestAttributes = new ServletRequestAttributes(httpServletRequestMock);
+        RequestContextHolder.setRequestAttributes(servletRequestAttributes);
     }
 
     @Test
@@ -46,7 +53,7 @@ public class ItemControllerTest extends TestFixtureSupport {
 
         assertEquals(itemResponse.getStatusCode(), HttpStatus.CREATED);
         assertEquals(itemResponse.getBody().getItems().size(), 3);
-        assertNotNull(itemBody.getId());
+        assertNotNull(itemBody.getDinnerRecipeId());
 
         TestDinnerRecipeApiEndpoints.deleteAll();
     }
@@ -94,7 +101,7 @@ public class ItemControllerTest extends TestFixtureSupport {
 
         assertEquals(itemResponse.getStatusCode(), HttpStatus.OK);
         assertEquals(itemBody.getName(), updatedRequestItem.getName());
-        assertNotNull(itemBody.getId());
+        assertNotNull(itemBody.getItemId());
 
         TestDinnerRecipeApiEndpoints.deleteAll();
     }
@@ -115,7 +122,7 @@ public class ItemControllerTest extends TestFixtureSupport {
         final ItemResource itemBody = itemResponse.getBody();
 
         assertEquals(itemResponse.getStatusCode(), HttpStatus.OK);
-        assertNotNull(itemBody.getId());
+        assertNotNull(itemBody.getItemId());
 
         TestDinnerRecipeApiEndpoints.deleteAll();
     }

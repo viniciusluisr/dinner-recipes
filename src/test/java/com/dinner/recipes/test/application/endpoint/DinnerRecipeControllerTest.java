@@ -13,7 +13,12 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment =  SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -21,7 +26,9 @@ public class DinnerRecipeControllerTest extends TestFixtureSupport {
 
     @Override
     public void setUp() {
-
+        HttpServletRequest httpServletRequestMock = new MockHttpServletRequest();
+        ServletRequestAttributes servletRequestAttributes = new ServletRequestAttributes(httpServletRequestMock);
+        RequestContextHolder.setRequestAttributes(servletRequestAttributes);
     }
 
     @Test
@@ -82,12 +89,12 @@ public class DinnerRecipeControllerTest extends TestFixtureSupport {
 
         assertEquals(response2.getStatusCode(), HttpStatus.OK);
 
-        assertEquals(body1.getId(), body2.getId());
+        assertEquals(body1.getDinnerRecipeId(), body2.getDinnerRecipeId());
         assertEquals(body1.getTitle(), body2.getTitle());
         assertEquals(body1.getDishType(), body2.getDishType());
         assertEquals(body1.getInstructions(), body2.getInstructions());
         assertEquals(body1.getServes(), body2.getServes());
-        assertEquals(body1.getItems(), body2.getItems());
+        assertEquals(body1.getItems().size(), body2.getItems().size());
 
         TestDinnerRecipeApiEndpoints.deleteAll();
     }
@@ -106,7 +113,7 @@ public class DinnerRecipeControllerTest extends TestFixtureSupport {
         final DinnerRecipeResource body2 = response2.getBody();
 
         assertEquals(response2.getStatusCode(), HttpStatus.OK);
-        assertNotNull(body2.getId());
+        assertNotNull(body2.getDinnerRecipeId());
         assertEquals(request.getTitle(), body2.getTitle());
         assertEquals(request.getDishType(), body2.getDishType());
         assertEquals(request.getInstructions(), body2.getInstructions());

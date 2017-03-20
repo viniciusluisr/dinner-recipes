@@ -1,40 +1,36 @@
 package com.dinner.recipes.application.api.resource;
 
 import com.dinner.recipes.infra.exception.InvalidDinnerRecipeParameterException;
+import com.dinner.recipes.infra.rest.AbstractResource;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
-import java.io.Serializable;
 import java.util.Optional;
 import java.util.Set;
 
 @ApiModel(value="Item Resource class", description="represents an object request or response for Dinner Recipe Item")
-@ToString
-@EqualsAndHashCode
-public class ItemResource implements Serializable {
+public class ItemResource extends AbstractResource {
 
     @ApiModelProperty(value = "represents an Dinner Recipe Item id")
-    private final String id;
+    private final String itemId;
     @ApiModelProperty(value = "represents an Dinner Recipe Item name")
     private final String name;
     @ApiModelProperty(value = "represents an list of ingredients related of an Dinner Recipe Item")
     private final Set<IngredientResource> ingredients;
 
     @JsonCreator
-    public ItemResource(@JsonProperty("id") String id,
+    public ItemResource(@JsonProperty("itemId") String itemId,
                         @JsonProperty("name") String name,
                         @JsonProperty("ingredients") Set<IngredientResource> ingredients) {
-        this.id = id;
+        this.itemId = itemId;
         this.name = name;
         this.ingredients = ingredients;
     }
 
-    public String getId() {
-        return id;
+    public String getItemId() {
+        return itemId;
     }
 
     public String getName() {

@@ -43,10 +43,10 @@ public class IngredientControllerTest extends TestFixtureSupport {
         final Ingredient ingredient = Fixture.from(Ingredient.class).gimme("plainChocolate");
         final IngredientResource ingredientRequest = new IngredientResourceMapper().map(ingredient);
 
-        final ResponseEntity<DinnerRecipeResource> response = TestIngredientApiEndpoints.addIngredient(dinnerRecipeBody.getId(), itemRequest.getId(), ingredientRequest);
+        final ResponseEntity<DinnerRecipeResource> response = TestIngredientApiEndpoints.addIngredient(dinnerRecipeBody.getDinnerRecipeId(), itemRequest.getItemId(), ingredientRequest);
         assertEquals(response.getStatusCode(), HttpStatus.CREATED);
 
-        final ItemResource body = TestItemApiEndpoints.find(dinnerRecipeBody.getId(), itemRequest.getId()).getBody();
+        final ItemResource body = TestItemApiEndpoints.find(dinnerRecipeBody.getDinnerRecipeId(), itemRequest.getItemId()).getBody();
 
         assertEquals(body.getIngredients().size(), itemRequest.getIngredients().size() + 1);
         assertTrue(body.getIngredients().contains(ingredientRequest));
@@ -70,7 +70,7 @@ public class IngredientControllerTest extends TestFixtureSupport {
         final Ingredient ingredient = Fixture.from(Ingredient.class).gimme("poundGroundPork");
         final IngredientResource ingredientRequest = new IngredientResourceMapper().map(ingredient);
 
-        final ResponseEntity<DinnerRecipeResource> response = TestIngredientApiEndpoints.addIngredient(dinnerRecipeBody.getId(), itemRequest.getId(), ingredientRequest);
+        final ResponseEntity<DinnerRecipeResource> response = TestIngredientApiEndpoints.addIngredient(dinnerRecipeBody.getDinnerRecipeId(), itemRequest.getItemId(), ingredientRequest);
         assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
 
         TestDinnerRecipeApiEndpoints.deleteAll();
@@ -91,9 +91,9 @@ public class IngredientControllerTest extends TestFixtureSupport {
 
         final IngredientResource ingredientRequest = itemRequest.getIngredients().stream().findFirst().get();
 
-        TestIngredientApiEndpoints.removeIngredient(dinnerRecipeBody.getId(), itemRequest.getId(), ingredientRequest);
+        TestIngredientApiEndpoints.removeIngredient(dinnerRecipeBody.getDinnerRecipeId(), itemRequest.getItemId(), ingredientRequest);
 
-        final ItemResource body = TestItemApiEndpoints.find(dinnerRecipeBody.getId(), itemRequest.getId()).getBody();
+        final ItemResource body = TestItemApiEndpoints.find(dinnerRecipeBody.getDinnerRecipeId(), itemRequest.getItemId()).getBody();
 
         assertEquals(body.getIngredients().size(), itemRequest.getIngredients().size() - 1);
         assertFalse(body.getIngredients().contains(ingredientRequest));

@@ -69,15 +69,15 @@ public class DinnerRecipeControllerTest extends TestFixtureSupport {
         final ResponseEntity<DinnerRecipeResource> response1 = TestDinnerRecipeApiEndpoints.create(request1);
         final DinnerRecipeResource body1 = response1.getBody();
 
-        final DinnerRecipeResource request2 = new DinnerRecipeResource(body1.getId(),
+        final DinnerRecipeResource request2 = new DinnerRecipeResource(body1.getDinnerRecipeId(),
                 "Egg's salad",
                 DishType.STARTER,
                 body1.getInstructions(),
                 5,
                 body1.getItems());
 
-        TestDinnerRecipeApiEndpoints.update(request1.getId(), request2);
-        final ResponseEntity<DinnerRecipeResource> response2 = TestDinnerRecipeApiEndpoints.find(body1.getId());
+        TestDinnerRecipeApiEndpoints.update(request1.getDinnerRecipeId(), request2);
+        final ResponseEntity<DinnerRecipeResource> response2 = TestDinnerRecipeApiEndpoints.find(body1.getDinnerRecipeId());
         DinnerRecipeResource body2 = response2.getBody();
 
         assertEquals(response2.getStatusCode(), HttpStatus.OK);
@@ -102,7 +102,7 @@ public class DinnerRecipeControllerTest extends TestFixtureSupport {
         final ResponseEntity<DinnerRecipeResource> response = TestDinnerRecipeApiEndpoints.create(request);
         final DinnerRecipeResource body = response.getBody();
 
-        final ResponseEntity<DinnerRecipeResource> response2 = TestDinnerRecipeApiEndpoints.find(body.getId());
+        final ResponseEntity<DinnerRecipeResource> response2 = TestDinnerRecipeApiEndpoints.find(body.getDinnerRecipeId());
         final DinnerRecipeResource body2 = response2.getBody();
 
         assertEquals(response2.getStatusCode(), HttpStatus.OK);
@@ -150,8 +150,8 @@ public class DinnerRecipeControllerTest extends TestFixtureSupport {
         final DinnerRecipeResource request = new DinnerRecipeResourceMapper().map(recipe);
         final ResponseEntity<DinnerRecipeResource> response1 = TestDinnerRecipeApiEndpoints.create(request);
 
-        TestDinnerRecipeApiEndpoints.delete(response1.getBody().getId());
-        ResponseEntity<DinnerRecipeResource> response2 = TestDinnerRecipeApiEndpoints.find(response1.getBody().getId());
+        TestDinnerRecipeApiEndpoints.delete(response1.getBody().getDinnerRecipeId());
+        ResponseEntity<DinnerRecipeResource> response2 = TestDinnerRecipeApiEndpoints.find(response1.getBody().getDinnerRecipeId());
         assertEquals(response2.getStatusCode(), HttpStatus.NOT_FOUND);
 
         TestDinnerRecipeApiEndpoints.deleteAll();

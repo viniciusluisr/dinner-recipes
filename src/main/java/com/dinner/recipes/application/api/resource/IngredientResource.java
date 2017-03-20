@@ -1,6 +1,7 @@
 package com.dinner.recipes.application.api.resource;
 
 import com.dinner.recipes.infra.exception.InvalidDinnerRecipeParameterException;
+import com.dinner.recipes.infra.rest.AbstractResource;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
@@ -12,9 +13,7 @@ import java.io.Serializable;
 import java.util.Optional;
 
 @ApiModel(value="Ingredient Resource class", description="represents an object request or response for Dinner Recipe Item Ingredient")
-@ToString
-@EqualsAndHashCode
-public class IngredientResource implements Serializable {
+public class IngredientResource extends AbstractResource {
 
     @ApiModelProperty(value = "represents an Ingredient name related of a Dinner Recipe Item")
     private final String name;

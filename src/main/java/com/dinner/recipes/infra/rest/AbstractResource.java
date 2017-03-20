@@ -1,9 +1,14 @@
 package com.dinner.recipes.infra.rest;
 
-import java.io.Serializable;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import org.springframework.hateoas.ResourceSupport;
+
 import java.util.UUID;
 
-public class AbstractResource implements Serializable {
+@ToString
+@EqualsAndHashCode
+public class AbstractResource extends ResourceSupport {
 
     private String requestUUID = UUID.randomUUID().toString();
 

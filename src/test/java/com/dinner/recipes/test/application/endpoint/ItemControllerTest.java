@@ -41,7 +41,7 @@ public class ItemControllerTest extends TestFixtureSupport {
         final Item item = Fixture.from(Item.class).gimme("meatballs");
         final ItemResource itemRequest = new ItemResourceMapper().map(item);
 
-        final ResponseEntity<DinnerRecipeResource> itemResponse = TestItemApiEndpoints.addItem(dinnerRecipeBody.getId(), itemRequest);
+        final ResponseEntity<DinnerRecipeResource> itemResponse = TestItemApiEndpoints.addItem(dinnerRecipeBody.getDinnerRecipeId(), itemRequest);
         final DinnerRecipeResource itemBody = itemResponse.getBody();
 
         assertEquals(itemResponse.getStatusCode(), HttpStatus.CREATED);
@@ -63,7 +63,7 @@ public class ItemControllerTest extends TestFixtureSupport {
 
         final ItemResource itemRequest = dinnerRecipeBody.getItems().stream().findFirst().get();
 
-        final ResponseEntity<DinnerRecipeResource> itemResponse = TestItemApiEndpoints.addItem(dinnerRecipeBody.getId(), itemRequest);
+        final ResponseEntity<DinnerRecipeResource> itemResponse = TestItemApiEndpoints.addItem(dinnerRecipeBody.getDinnerRecipeId(), itemRequest);
 
         assertEquals(itemResponse.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
 
@@ -82,13 +82,13 @@ public class ItemControllerTest extends TestFixtureSupport {
 
         final ItemResource itemRequest = dinnerRecipeBody.getItems().stream().findFirst().get();
 
-        final ItemResource updatedRequestItem = new ItemResource(itemRequest.getId(),
+        final ItemResource updatedRequestItem = new ItemResource(itemRequest.getItemId(),
                 "New item",
                 itemRequest.getIngredients());
 
-        TestItemApiEndpoints.update(dinnerRecipeBody.getId(), itemRequest.getId(), updatedRequestItem);
+        TestItemApiEndpoints.update(dinnerRecipeBody.getDinnerRecipeId(), itemRequest.getItemId(), updatedRequestItem);
 
-        final ResponseEntity<ItemResource> itemResponse = TestItemApiEndpoints.find(dinnerRecipeBody.getId(), updatedRequestItem.getId());
+        final ResponseEntity<ItemResource> itemResponse = TestItemApiEndpoints.find(dinnerRecipeBody.getDinnerRecipeId(), updatedRequestItem.getItemId());
         final ItemResource itemBody = itemResponse.getBody();
 
 
@@ -111,7 +111,7 @@ public class ItemControllerTest extends TestFixtureSupport {
 
         final ItemResource itemRequest = dinnerRecipeBody.getItems().stream().findFirst().get();
 
-        final ResponseEntity<ItemResource> itemResponse = TestItemApiEndpoints.find(dinnerRecipeBody.getId(), itemRequest.getId());
+        final ResponseEntity<ItemResource> itemResponse = TestItemApiEndpoints.find(dinnerRecipeBody.getDinnerRecipeId(), itemRequest.getItemId());
         final ItemResource itemBody = itemResponse.getBody();
 
         assertEquals(itemResponse.getStatusCode(), HttpStatus.OK);
@@ -128,7 +128,7 @@ public class ItemControllerTest extends TestFixtureSupport {
         final ResponseEntity<DinnerRecipeResource> dinnerRecipeResponse = TestDinnerRecipeApiEndpoints.create(dinnerRecipeRequest);
         final DinnerRecipeResource dinnerRecipeBody = dinnerRecipeResponse.getBody();
 
-        final ResponseEntity<ItemResource> itemResponse = TestItemApiEndpoints.find(dinnerRecipeBody.getId(), "id");
+        final ResponseEntity<ItemResource> itemResponse = TestItemApiEndpoints.find(dinnerRecipeBody.getDinnerRecipeId(), "id");
 
         assertEquals(itemResponse.getStatusCode(), HttpStatus.NOT_FOUND);
     }
@@ -145,9 +145,9 @@ public class ItemControllerTest extends TestFixtureSupport {
 
         final ItemResource itemRequest = dinnerRecipeBody.getItems().stream().findFirst().get();
 
-        TestItemApiEndpoints.removeItem(dinnerRecipeBody.getId(), itemRequest.getId());
+        TestItemApiEndpoints.removeItem(dinnerRecipeBody.getDinnerRecipeId(), itemRequest.getItemId());
 
-        final ResponseEntity<ItemResource> itemResponse = TestItemApiEndpoints.find(dinnerRecipeBody.getId(), itemRequest.getId());
+        final ResponseEntity<ItemResource> itemResponse = TestItemApiEndpoints.find(dinnerRecipeBody.getDinnerRecipeId(), itemRequest.getItemId());
 
         assertEquals(itemResponse.getStatusCode(), HttpStatus.NOT_FOUND);
 

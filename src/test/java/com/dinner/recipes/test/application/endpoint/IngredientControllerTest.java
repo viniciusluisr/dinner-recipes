@@ -74,8 +74,7 @@ public class IngredientControllerTest extends TestFixtureSupport {
 
         final ItemResource itemRequest = dinnerRecipeBody.getItems().stream().findFirst().get();
 
-        final Ingredient ingredient = Fixture.from(Ingredient.class).gimme("poundGroundPork");
-        final IngredientResource ingredientRequest = new IngredientResourceMapper().map(ingredient);
+        final IngredientResource ingredientRequest = itemRequest.getIngredients().stream().findFirst().get();
 
         final ResponseEntity<DinnerRecipeResource> response = TestIngredientApiEndpoints.addIngredient(dinnerRecipeBody.getDinnerRecipeId(), itemRequest.getItemId(), ingredientRequest);
         assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);

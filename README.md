@@ -7,6 +7,7 @@
 * Docker Compose 3
 
 ### How to run the project:
+* Be sure that Docker is running in your environment 
 * Just run start.sh
 
 ### Swagger documentation:

@@ -52,6 +52,25 @@ public class ItemControllerTest extends TestFixtureSupport {
     }
 
     @Test
+    public void testAddAnAlreadyExistingItem() {
+        TestDinnerRecipeApiEndpoints.deleteAll();
+
+        final DinnerRecipe recipe = Fixture.from(DinnerRecipe.class).gimme("chocolateCake");
+        final DinnerRecipeResource dinnerRecipeRequest = new DinnerRecipeResourceMapper().map(recipe);
+
+        final ResponseEntity<DinnerRecipeResource> dinnerRecipeResponse = TestDinnerRecipeApiEndpoints.create(dinnerRecipeRequest);
+        final DinnerRecipeResource dinnerRecipeBody = dinnerRecipeResponse.getBody();
+
+        final ItemResource itemRequest = dinnerRecipeBody.getItems().stream().findFirst().get();
+
+        final ResponseEntity<DinnerRecipeResource> itemResponse = TestItemApiEndpoints.addItem(dinnerRecipeBody.getId(), itemRequest);
+
+        assertEquals(itemResponse.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        TestDinnerRecipeApiEndpoints.deleteAll();
+    }
+
+    @Test
     public void testUpdate() {
         TestDinnerRecipeApiEndpoints.deleteAll();
 

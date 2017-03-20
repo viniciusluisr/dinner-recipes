@@ -20,6 +20,15 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>
     <docker.image.prefix>springio</docker.image.prefix>
+    <lombok.version>1.16.14</lombok.version>
+    <junit.version>4.12</junit.version>
+    <fixture-factory.version>3.0.0</fixture-factory.version>
+    <scala-mock.version>3.4.2</scala-mock.version>
+    <scalactic.version>3.0.1</scalactic.version>
+    <spring-rest-exception-handler.version>1.2.0</spring-rest-exception-handler.version>
+    <guava.version>20.0</guava.version>
+    <commons-lang3.version>3.5</commons-lang3.version>
+    <springfox-swagger2.version>2.6.1</springfox-swagger2.version>
   </properties>
 
   <dependencies>
@@ -42,46 +51,46 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.16.14</version>
+      <version>${lombok.version}</version>
     </dependency>
 
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.12</version>
+      <version>${junit.version}</version>
     </dependency>
 
     <dependency>
       <groupId>br.com.six2six</groupId>
       <artifactId>fixture-factory</artifactId>
-      <version>3.0.0</version>
+      <version>${fixture-factory.version}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.scalamock</groupId>
       <artifactId>scalamock-scalatest-support_2.11</artifactId>
-      <version>3.4.2</version>
+      <version>${scala-mock.version}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.scalactic</groupId>
       <artifactId>scalactic_2.11</artifactId>
-      <version>3.0.1</version>
+      <version>${scalactic.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.scalatest</groupId>
       <artifactId>scalatest_2.11</artifactId>
-      <version>3.0.1</version>
+      <version>${scalactic.version}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>cz.jirutka.spring</groupId>
       <artifactId>spring-rest-exception-handler</artifactId>
-      <version>1.2.0</version>
+      <version>${spring-rest-exception-handler.version}</version>
       <exclusions>
         <exclusion>
           <groupId>com.fasterxml.jackson.core</groupId>
@@ -93,25 +102,25 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>20.0</version>
+      <version>${guava.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.5</version>
+      <version>${commons-lang3.version}</version>
     </dependency>
 
     <dependency>
       <groupId>io.springfox</groupId>
       <artifactId>springfox-swagger2</artifactId>
-      <version>2.6.1</version>
+      <version>${springfox-swagger2.version}</version>
     </dependency>
 
     <dependency>
       <groupId>io.springfox</groupId>
       <artifactId>springfox-swagger-ui</artifactId>
-      <version>2.6.1</version>
+      <version>${springfox-swagger2.version}</version>
     </dependency>
 
   </dependencies>

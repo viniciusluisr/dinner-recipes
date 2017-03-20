@@ -46,6 +46,20 @@ public class DinnerRecipeControllerTest extends TestFixtureSupport {
     }
 
     @Test
+    public void testCreateAnAlreadyExistingRecipe() {
+        TestDinnerRecipeApiEndpoints.deleteAll();
+
+        final DinnerRecipe recipe = Fixture.from(DinnerRecipe.class).gimme("bollerIKarry");
+        final DinnerRecipeResource request = new DinnerRecipeResourceMapper().map(recipe);
+
+        TestDinnerRecipeApiEndpoints.create(request);
+        final ResponseEntity<DinnerRecipeResource> response = TestDinnerRecipeApiEndpoints.create(request);
+        assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        TestDinnerRecipeApiEndpoints.deleteAll();
+    }
+
+    @Test
     public void testUpdate() {
         TestDinnerRecipeApiEndpoints.deleteAll();
 
